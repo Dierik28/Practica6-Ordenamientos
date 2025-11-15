@@ -191,22 +191,31 @@ public class OrdenamientosController {
 
     private BorderPane crearGrafica() {
         CategoryAxis ejeX = new CategoryAxis();
-        ejeX.setLabel("Métodos de Ordenamiento");
-
         NumberAxis ejeY = new NumberAxis();
+
+        ejeX.setLabel("Métodos de Ordenamiento");
         ejeY.setLabel("Tiempo (nanosegundos)");
+
+        ejeX.tickLabelFillProperty().set(Color.WHITE);
+        ejeY.tickLabelFillProperty().set(Color.WHITE);
 
         graficaTiempos = new BarChart<>(ejeX, ejeY);
         graficaTiempos.setTitle("Comparativa de tiempos");
         graficaTiempos.setLegendVisible(true);
         graficaTiempos.setAnimated(false);
 
-        BorderPane panel = new BorderPane();
-        panel.setCenter(graficaTiempos);
+        BorderPane panel = new BorderPane(graficaTiempos);
         panel.setPadding(new Insets(10));
+        Platform.runLater(() -> {
+            ejeX.lookup(".axis-label").setStyle("-fx-text-fill: white;");
+            ejeY.lookup(".axis-label").setStyle("-fx-text-fill: white;");
+            graficaTiempos.lookup(".chart-title").setStyle("-fx-text-fill: white;");
+        });
 
         return panel;
     }
+
+
 
     private HBox crearPiePagina() {
         Label estado = new Label("Listo para comenzar");
